@@ -6,25 +6,47 @@ public class SteamVR_TestThrow1 : MonoBehaviour
 {
 	public GameObject prefab;
 	public Rigidbody attachPoint;
+	public GameObject cooldownIndicator;
 
 	SteamVR_TrackedObject trackedObj;
 	FixedJoint joint;
 
+	float throwCooldownTime = 2.0f; // Seconds
+	float currentCoolDownTime = 0.0f;
+	GameObject cooldownInstance;
+
 	void Awake()
 	{
 		trackedObj = GetComponent<SteamVR_TrackedObject>();
+		cooldownInstance = GameObject.Instantiate(cooldownIndicator);
 	}
 
 	void FixedUpdate()
 	{
+		// Update cool down timer
+		if (currentCoolDownTime > 0.0f) {
+			currentCoolDownTime -= Time.deltaTime;
+			if (currentCoolDownTime > 0.0f) {
+				cooldownInstance.GetComponent<Renderer> ().enabled = false;
+			}
+			else {
+				currentCoolDownTime = 0.0f;
+				cooldownInstance.GetComponent<Renderer> ().enabled = true;
+			}
+		}
+
 		var device = SteamVR_Controller.Input((int)trackedObj.index);
 		if (joint == null && device.GetTouchDown(SteamVR_Controller.ButtonMask.Trigger))
 		{
-			var go = GameObject.Instantiate(prefab);
-			go.transform.position = attachPoint.transform.position;
+			if (currentCoolDownTime == 0.0f) {
+				currentCoolDownTime = throwCooldownTime;
 
-			joint = go.AddComponent<FixedJoint>();
-			joint.connectedBody = attachPoint;
+				var go = GameObject.Instantiate(prefab);
+				go.transform.position = attachPoint.transform.position;
+
+				joint = go.AddComponent<FixedJoint>();
+				joint.connectedBody = attachPoint;
+			} 
 		}
 		else if (joint != null && device.GetTouchUp(SteamVR_Controller.ButtonMask.Trigger))
 		{
@@ -52,6 +74,10 @@ public class SteamVR_TestThrow1 : MonoBehaviour
 			}
 
 			rigidbody.maxAngularVelocity = rigidbody.angularVelocity.magnitude;
+
 		}
+
+		// Position cool down indicator
+		cooldownInstance.transform.position = attachPoint.transform.position;
 	}
 }
