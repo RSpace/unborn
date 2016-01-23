@@ -18,6 +18,7 @@ public class MotherTrigger : MonoBehaviour {
     void OnTriggerEnter(Collider other)
     {
         Animator agentAnim = (other.gameObject.GetComponent<Animator>());
+        if (agentAnim != null)
         agentAnim.SetTrigger("attack");
        
         TakeDamage();
