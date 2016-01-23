@@ -1,12 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-[RequireComponent(typeof(SteamVR_TrackedObject))]
+[RequireComponent(typeof(SteamVR_TrackedObject), typeof(AudioSource))]
 public class SteamVR_TestThrow1 : MonoBehaviour
 {
 	public GameObject prefab;
 	public Rigidbody attachPoint;
 	public GameObject cooldownIndicator;
+	public AudioClip igniteSound;
 
 	SteamVR_TrackedObject trackedObj;
 	FixedJoint joint;
@@ -46,6 +47,9 @@ public class SteamVR_TestThrow1 : MonoBehaviour
 
 				joint = go.AddComponent<FixedJoint>();
 				joint.connectedBody = attachPoint;
+
+				AudioSource.PlayClipAtPoint(igniteSound, attachPoint.transform.position);
+
 			} 
 		}
 		else if (joint != null && device.GetTouchUp(SteamVR_Controller.ButtonMask.Trigger))
