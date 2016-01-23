@@ -18,11 +18,12 @@ public class BaseAI : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
         speed = Mathf.Lerp(0f, 1f, speed + Time.deltaTime);
-        Debug.Log(speed);
         transform.position = Vector3.MoveTowards(transform.position, MoveTo.position, speed * speedmodifier * Time.deltaTime); //Vector3.SmoothDamp(transform.position, MoveTo.position, ref speed,0.8f);
         anim.SetFloat("speed", speed);
 
     }
+
+
 }

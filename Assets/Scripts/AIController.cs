@@ -5,6 +5,7 @@ public class AIController : MonoBehaviour {
 
 
     public Transform[] spawnPoints;
+    public Transform mother;
 
     public GameObject Agent0Prefab;
 
@@ -16,11 +17,12 @@ public class AIController : MonoBehaviour {
 
     IEnumerator Spawn()
     {
-        for(int i = 0; i<5; i++)
+        int lvl = 1;
+        yield return new WaitForSeconds(15f);
+        for(int i = 0; i<500; i++)
         {
-            Debug.Log("Spawn");
-            Instantiate(Agent0Prefab, spawnPoints[0].position, spawnPoints[0].rotation);
-            yield return new WaitForSeconds(10.0f);
+            Instantiate(Agent0Prefab, spawnPoints[Random.Range(0,spawnPoints.Length)].position, spawnPoints[0].rotation);
+            yield return new WaitForSeconds(Random.Range(3f,10f));
         }
         yield return 0; 
 
