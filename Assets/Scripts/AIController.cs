@@ -14,11 +14,11 @@ public class AIController : MonoBehaviour {
         StartCoroutine("Spawn");
 	}
 
-    IEnumerable Spawn()
+    IEnumerator Spawn()
     {
         for(int i = 0; i<5; i++)
         {
-
+            Debug.Log("Spawn");
             Instantiate(Agent0Prefab, spawnPoints[0].position, spawnPoints[0].rotation);
             yield return new WaitForSeconds(6.0f);
         }
