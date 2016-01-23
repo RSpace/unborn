@@ -1,9 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+[RequireComponent(typeof(AudioSource))]
 public class SamuraiHealthController : MonoBehaviour {
 
 	public GameObject explosionPrefab;
+	public AudioClip explosionSound;
+	public AudioClip deathSound;
 
 	int currentHealth = 100;
 
@@ -22,10 +25,10 @@ public class SamuraiHealthController : MonoBehaviour {
 			// Add explosion
 			var explosion = GameObject.Instantiate(explosionPrefab);
 			explosion.transform.position = collision.gameObject.transform.position;
-            Debug.Log(collision.gameObject.name);
+			AudioSource.PlayClipAtPoint(explosionSound, explosion.transform.position);
 
-            // Remove fireball
-            Destroy(collision.gameObject);
+      // Remove fireball
+      Destroy(collision.gameObject);
 
 			// Subtract health
 			int healthLost = getHealthCost(collision.gameObject.name);
@@ -35,7 +38,8 @@ public class SamuraiHealthController : MonoBehaviour {
 			// Check for death
 			if (currentHealth <= 0) {
 				var samuraiExplosion = GameObject.Instantiate(explosionPrefab);
-				samuraiExplosion.transform.position = collision.gameObject.transform.position;
+				samuraiExplosion.transform.position = gameObject.transform.position;
+				AudioSource.PlayClipAtPoint(deathSound, samuraiExplosion.transform.position);
 				Destroy(gameObject);
 			}
 		}
