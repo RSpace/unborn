@@ -22,13 +22,15 @@ public class SamuraiHealthController : MonoBehaviour {
 			// Add explosion
 			var explosion = GameObject.Instantiate(explosionPrefab);
 			explosion.transform.position = collision.gameObject.transform.position;
+            Debug.Log(collision.gameObject.name);
 
-			// Remove fireball
-			Destroy(collision.gameObject);
+            // Remove fireball
+            Destroy(collision.gameObject);
 
 			// Subtract health
 			int healthLost = getHealthCost(collision.gameObject.name);
 			currentHealth -= healthLost;
+            Debug.Log(currentHealth);
 
 			// Check for death
 			if (currentHealth <= 0) {
@@ -41,7 +43,7 @@ public class SamuraiHealthController : MonoBehaviour {
 
 	int getHealthCost(string name) {
 		switch (name) {
-		case "MobileSun":
+		case "MobileSun(Clone)":
 			return 50;
 		default:
 			return 0;

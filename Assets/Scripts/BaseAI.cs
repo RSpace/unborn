@@ -12,9 +12,9 @@ public class BaseAI : MonoBehaviour {
         MoveTo = GameObject.Find("mother").transform;
 
         anim = gameObject.GetComponent<Animator>();
-        if (anim == null|)
+        if (anim == null ) 
             Debug.LogError("No Animator found");
-        transform.forward = (Vector3.RotateTowards(transform.forward, (MoveTo.position - transform.position).normalized,Mathf.PI,Mathf.PI) );
+        transform.forward = (Vector3.RotateTowards(transform.forward, (MoveTo.position - transform.position).normalized,Mathf.PI,Mathf.PI));
 	}
 	
 	// Update is called once per frame
