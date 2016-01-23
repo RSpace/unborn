@@ -5,12 +5,14 @@ public class BaseAI : MonoBehaviour {
 
     private Animator anim;
     // Use this for initialization'
-    public Transform MoveTo;
+    private Transform MoveTo;
     public float speedmodifier = 5f;
     private float speed = 0f;// Vector3.zero;
 	void Start () {
+        MoveTo = GameObject.Find("mother").transform;
+
         anim = gameObject.GetComponent<Animator>();
-        if (anim == null)
+        if (anim == null|)
             Debug.LogError("No Animator found");
         transform.forward = (Vector3.RotateTowards(transform.forward, (MoveTo.position - transform.position).normalized,Mathf.PI,Mathf.PI) );
 	}

@@ -20,7 +20,7 @@ public class AIController : MonoBehaviour {
         {
             Debug.Log("Spawn");
             Instantiate(Agent0Prefab, spawnPoints[0].position, spawnPoints[0].rotation);
-            yield return new WaitForSeconds(6.0f);
+            yield return new WaitForSeconds(10.0f);
         }
         yield return 0; 
 
