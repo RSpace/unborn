@@ -33,7 +33,7 @@ public class SteamVR_TestThrow1 : MonoBehaviour
         //{
             if (device.GetTouch(SteamVR_Controller.ButtonMask.Trigger))
                 currentCoolDownTime -= Time.deltaTime;
-            else
+            else if(currentCoolDownTime<throwCooldownTime)
                 currentCoolDownTime += Time.deltaTime;
             
 
