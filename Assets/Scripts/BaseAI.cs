@@ -6,6 +6,7 @@ public class BaseAI : MonoBehaviour {
     private Animator anim;
     // Use this for initialization'
     private Transform MoveTo;
+    private Vector3 target = Vector3.zero;
     public float speedmodifier = 5f;
     private float speed = 0f;// Vector3.zero;
 	void Start () {
@@ -15,12 +16,13 @@ public class BaseAI : MonoBehaviour {
         if (anim == null ) 
             Debug.LogError("No Animator found");
         transform.forward = (Vector3.RotateTowards(transform.forward, (MoveTo.position - transform.position).normalized,Mathf.PI,Mathf.PI));
+        target = MoveTo.position - (MoveTo.position - transform.position).normalized;
 	}
 	
 	// Update is called once per frame
 	void FixedUpdate () {
         speed = Mathf.Lerp(0f, 1f, speed + Time.deltaTime);
-        transform.position = Vector3.MoveTowards(transform.position, MoveTo.position, speed * speedmodifier * Time.deltaTime); //Vector3.SmoothDamp(transform.position, MoveTo.position, ref speed,0.8f);
+        transform.position = Vector3.MoveTowards(transform.position,target, speed * speedmodifier * Time.deltaTime); //Vector3.SmoothDamp(transform.position, MoveTo.position, ref speed,0.8f);
         anim.SetFloat("speed", speed);
 
     }
