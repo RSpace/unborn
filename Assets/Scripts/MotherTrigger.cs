@@ -30,7 +30,7 @@ public class MotherTrigger : MonoBehaviour
 
 	private void TakeDamage ()
 	{
-		if (hp >= 0)
+		if (hp <= 0)
 			return;
 			
 		audio.clip = sounds [sounds.Length - hp];
@@ -44,6 +44,6 @@ public class MotherTrigger : MonoBehaviour
 	{
 		var dieEffect = GameObject.Instantiate (dieEffectPrefab);
 		dieEffect.transform.position = gameObject.transform.position;
-		Destroy (gameObject);			
+		//Destroy (gameObject);			
 	}
 }
