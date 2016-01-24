@@ -22,7 +22,9 @@ public class SteamVR_TestThrow1 : MonoBehaviour
 	{
 		trackedObj = GetComponent<SteamVR_TrackedObject>();
 		cooldownInstance = GameObject.Instantiate(cooldownIndicator);
-	}
+        cooldownInstance.transform.localScale = Vector3.one * 0.05f;
+
+    }
 
 	void FixedUpdate()
     {// Update cool down timer
@@ -36,8 +38,7 @@ public class SteamVR_TestThrow1 : MonoBehaviour
 
             if (currentCoolDownTime > 0.0f)
             {
-                cooldownInstance.transform.localScale = Vector3.Lerp(Vector3.zero, Vector3.one, (throwCooldownTime - currentCoolDownTime) / throwCooldownTime);
-                    )
+                cooldownInstance.transform.localScale = Vector3.Lerp(Vector3.one * 0.05f, Vector3.one*0.5f, (throwCooldownTime - currentCoolDownTime) / throwCooldownTime);
             }
             else {
                 currentCoolDownTime = 0.0f;
