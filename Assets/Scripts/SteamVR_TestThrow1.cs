@@ -14,23 +14,23 @@ public class SteamVR_TestThrow1 : MonoBehaviour
 	SteamVR_TrackedObject trackedObj;
 	FixedJoint joint;
 
-	float throwCooldownTime = 2.0f; // Seconds
-	float currentCoolDownTime = 0.0f;
+	float throwCooldownTime = 1.5f; // Seconds
+	float currentCoolDownTime = 1.5f;
 	GameObject cooldownInstance;
 
 	void Awake()
 	{
 		trackedObj = GetComponent<SteamVR_TrackedObject>();
 		cooldownInstance = GameObject.Instantiate(cooldownIndicator);
-        cooldownInstance.transform.localScale = Vector3.one * 0.05f;
+        cooldownInstance.transform.localScale = Vector3.one * 0.01f;
 
     }
 
 	void FixedUpdate()
     {// Update cool down timer
         var device = SteamVR_Controller.Input((int)trackedObj.index);
-        if (currentCoolDownTime > 0.0f)//do scaling
-        {
+        //if (currentCoolDownTime > 0.0f)//do scaling
+        //{
             if (device.GetTouch(SteamVR_Controller.ButtonMask.Trigger))
                 currentCoolDownTime -= Time.deltaTime;
             else
@@ -38,13 +38,13 @@ public class SteamVR_TestThrow1 : MonoBehaviour
 
             if (currentCoolDownTime > 0.0f)
             {
-                cooldownInstance.transform.localScale = Vector3.Lerp(Vector3.one * 0.05f, Vector3.one*0.5f, (throwCooldownTime - currentCoolDownTime) / throwCooldownTime);
+                cooldownInstance.transform.localScale = Vector3.Lerp(Vector3.one * 0.01f, Vector3.one*0.25f, (throwCooldownTime - currentCoolDownTime) / throwCooldownTime);
             }
             else {
                 currentCoolDownTime = 0.0f;
                 cooldownInstance.GetComponent<Renderer>().enabled = true;
             }
-        }
+        //}
 
        
         if (joint == null && device.GetTouchUp (SteamVR_Controller.ButtonMask.Trigger))
