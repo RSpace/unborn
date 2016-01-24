@@ -21,7 +21,10 @@ public class MotherTrigger : MonoBehaviour
 
 	void OnTriggerEnter (Collider other)
 	{
-		Animator agentAnim = (other.gameObject.GetComponent<Animator> ());
+        if (other.tag != "enemy")
+            return;
+
+        Animator agentAnim = (other.gameObject.GetComponent<Animator> ());
 		if (agentAnim != null)
 			agentAnim.SetTrigger ("attack");
        

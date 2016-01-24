@@ -8,6 +8,8 @@ public class SteamVR_TestThrow1 : MonoBehaviour
 	public Rigidbody attachPoint;
 	public GameObject cooldownIndicator;
 	public AudioClip igniteSound;
+	public Rigidbody projectile;
+	public float speed = 20;
 
 	SteamVR_TrackedObject trackedObj;
 	FixedJoint joint;
@@ -42,12 +44,14 @@ public class SteamVR_TestThrow1 : MonoBehaviour
 			if (currentCoolDownTime == 0.0f) {
 				currentCoolDownTime = throwCooldownTime;
 
-				var go = GameObject.Instantiate(prefab);
+				/*var go = GameObject.Instantiate(prefab);
 				go.transform.position = attachPoint.transform.position;
 
 				joint = go.AddComponent<FixedJoint>();
-				joint.connectedBody = attachPoint;
+				joint.connectedBody = attachPoint;*/
 
+				Rigidbody instantiatedProjectile = Instantiate(projectile,transform.position,transform.rotation)as Rigidbody;
+				instantiatedProjectile.velocity = transform.TransformDirection(new Vector3(0, 0,speed));
 				AudioSource.PlayClipAtPoint(igniteSound, attachPoint.transform.position);
 
 			} 
