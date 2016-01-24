@@ -35,6 +35,7 @@ public class SteamVR_TestThrow1 : MonoBehaviour
                 currentCoolDownTime -= Time.deltaTime;
             else
                 currentCoolDownTime += Time.deltaTime;
+            
 
             if (currentCoolDownTime > 0.0f)
             {
