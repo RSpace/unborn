@@ -25,9 +25,47 @@ public class SteamVR_TestThrow1 : MonoBehaviour
 	}
 
 	void FixedUpdate()
-	{
-		// Update cool down timer
-		if (currentCoolDownTime > 0.0f) {
+    {// Update cool down timer
+        var device = SteamVR_Controller.Input((int)trackedObj.index);
+        if (currentCoolDownTime > 0.0f)//do scaling
+        {
+            if (device.GetTouch(SteamVR_Controller.ButtonMask.Trigger))
+                currentCoolDownTime -= Time.deltaTime;
+            else
+                currentCoolDownTime += Time.deltaTime;
+
+            if (currentCoolDownTime > 0.0f)
+            {
+                cooldownInstance.transform.localScale = Vector3.Lerp(Vector3.zero, Vector3.one, (throwCooldownTime - currentCoolDownTime) / throwCooldownTime);
+                    )
+            }
+            else {
+                currentCoolDownTime = 0.0f;
+                cooldownInstance.GetComponent<Renderer>().enabled = true;
+            }
+        }
+
+       
+        if (joint == null && device.GetTouchUp (SteamVR_Controller.ButtonMask.Trigger))
+        {
+            if (currentCoolDownTime == 0.0f)
+            {
+                currentCoolDownTime = throwCooldownTime;
+
+                /*var go = GameObject.Instantiate(prefab);
+				go.transform.position = attachPoint.transform.position;
+
+				joint = go.AddComponent<FixedJoint>();
+				joint.connectedBody = attachPoint;*/
+
+                Rigidbody instantiatedProjectile = Instantiate(projectile, transform.position, transform.rotation) as Rigidbody;
+                instantiatedProjectile.velocity = transform.TransformDirection(new Vector3(0, 0, speed));
+                AudioSource.PlayClipAtPoint(igniteSound, attachPoint.transform.position);
+
+            }
+        }
+        // Update cool down timer
+        /*if (currentCoolDownTime > 0.0f) {
 			currentCoolDownTime -= Time.deltaTime;
 			if (currentCoolDownTime > 0.0f) {
 				cooldownInstance.GetComponent<Renderer> ().enabled = false;
@@ -48,15 +86,15 @@ public class SteamVR_TestThrow1 : MonoBehaviour
 				go.transform.position = attachPoint.transform.position;
 
 				joint = go.AddComponent<FixedJoint>();
-				joint.connectedBody = attachPoint;*/
+				joint.connectedBody = attachPoint;
 
 				Rigidbody instantiatedProjectile = Instantiate(projectile,transform.position,transform.rotation)as Rigidbody;
 				instantiatedProjectile.velocity = transform.TransformDirection(new Vector3(0, 0,speed));
 				AudioSource.PlayClipAtPoint(igniteSound, attachPoint.transform.position);
 
 			} 
-		}
-		else if (joint != null && device.GetTouchUp(SteamVR_Controller.ButtonMask.Trigger))
+		}*/
+        else if (joint != null && device.GetTouchUp(SteamVR_Controller.ButtonMask.Trigger))
 		{
 			var go = joint.gameObject;
 			var rigidbody = go.GetComponent<Rigidbody>();
