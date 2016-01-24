@@ -29,6 +29,7 @@ public class ArcherAI : MonoBehaviour {
     public void Shoot()
     {
         GameObject arrow = GameObject.Instantiate(m_arrow);
+        arrow.GetComponent<Arrow>().enabled = true;
     }
 
   
